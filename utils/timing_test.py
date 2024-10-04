@@ -2,6 +2,7 @@ import subprocess
 import statistics as stats
 import sys
 import time
+from security import safe_command
 
 runtimes = []
 
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     @timeit_wrapper
     def run():
         cmd = "python3 " + script
-        subprocess.call(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        safe_command.run(subprocess.call, cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     print("running timing test for {} with {} trials".format(script, num_trials))
 

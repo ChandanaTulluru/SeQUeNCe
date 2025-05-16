@@ -7,16 +7,16 @@ import json
 import pandas as pd
 import numpy as np
 from simanneal import Annealer
-import random
 
 from generator_utils import add_default_args, generate_bsm_links, generate_classical, final_config
 
 from sequence.topology.topology import Topology
 from sequence.topology.router_net_topo import RouterNetTopo
+import secrets
 
 
 SEED = 1
-random.seed(SEED)
+secrets.SystemRandom().seed(SEED)
 
 
 def router_name_func(i):
@@ -60,8 +60,8 @@ def get_partition(graph, GROUP_NUM, node_memo_size):
             group = self.group
             r_group = self.reverse_map_group
 
-            g1, g2 = random.choices(list(range(len(group))), k=2)
-            index1, index2 = random.choices(list(range(len(group[g1]))), k=2)
+            g1, g2 = secrets.SystemRandom().choices(list(range(len(group))), k=2)
+            index1, index2 = secrets.SystemRandom().choices(list(range(len(group[g1]))), k=2)
             n1, n2 = group[g1][index1], group[g2][index2]
 
             group[g1][index1], group[g2][index2] = n2, n1
@@ -145,7 +145,7 @@ for hop_num in range(MAX_HOP - 1, -1, -1):
     flow_num = FLOW_NUMS[hop_num]
     for f_index in range(flow_num):
         while len(paths[hop_num]) > 0:
-            sample_index = random.choice(list(range(len(paths[hop_num]))))
+            sample_index = secrets.choice(list(range(len(paths[hop_num]))))
             sample_path = paths[hop_num][sample_index]
             paths[hop_num].remove(sample_path)
 
@@ -172,7 +172,7 @@ while unused_nodes:
     if unused_nodes:
         n2 = unused_nodes.pop()
     else:
-        samples = random.choice(list(range(NET_SIZE)), 2)
+        samples = secrets.choice(list(range(NET_SIZE)), 2)
         if samples[0] != n1:
             n2 = samples[0]
         else:

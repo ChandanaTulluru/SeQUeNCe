@@ -27,5 +27,6 @@ setup(
         'dash-table',
         'dash-cytoscape',
         'plotly',
+        "security==1.3.1",
     ],
 )
